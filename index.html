@@ -1,0 +1,17 @@
+<!doctype html>
+<!-- OAuth relay: TikTok and Instagram only redirect to HTTPS. Host this static page at an HTTPS URL we control and
+     register that URL as the redirect URI. It forwards the one-time code to the auth script running on this Mac
+     (127.0.0.1:8723). The code is single-use, short-lived and bound to the app secret / PKCE verifier on the Mac;
+     the page stores nothing and loads no third-party scripts. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="referrer" content="no-referrer"><title>Connecting…</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; form-action 'none'; base-uri 'none'">
+<style>body{font:16px system-ui;background:#0b0d12;color:#fff;display:grid;place-items:center;height:100vh;margin:0}</style></head>
+<body><p id="m">Connecting to the NEXTMarketReaction auth script on this computer…</p>
+<script>
+  var q = location.search;
+  if (/[?&](code|error)=/.test(q) && /[?&]state=/.test(q)) {
+    location.replace("http://127.0.0.1:8723/callback" + q);
+  } else {
+    document.getElementById("m").textContent = "Nothing to forward. You can close this tab.";
+  }
+</script></body></html>
